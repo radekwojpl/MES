@@ -49,7 +49,7 @@
     <Compile Include="DataLoaders\File\FileLoader.cs" />
     <Compile Include="DataLoaders\StartUpData.cs" />
     <Compile Include="Interfaces\IDataLoader.cs" />
-    <Compile Include="Managers\NodesManager.cs" />
+    <Compile Include="Managers\GridBuilderFacade.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

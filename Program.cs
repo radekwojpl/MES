@@ -1,4 +1,5 @@
-﻿using MES_App.DataLoaders.File;
+﻿using MES_App.BasicStruct;
+using MES_App.DataLoaders.File;
 using MES_App.Interfaces;
 using MES_App.Managers;
 using System;
@@ -17,8 +18,9 @@ namespace MES_App
 
             var tmp = dataLoader.LoadData();
 
-            var tmp1 = NodesManager.BuildNodes(6,4,20);
+            GridBuilderFacade gridBuilder = new GridBuilderFacade();
 
+           var grid= gridBuilder.BuildGrid();
 
         }
     }
