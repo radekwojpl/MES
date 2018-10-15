@@ -11,11 +11,14 @@ namespace MES_App.Managers
     {
         private List<Node> _Nodes;
         private List<Element> _Elements;
-        private Grid _Grid;
+        
 
         public Grid BuildGrid()
         {
-            return null;
+            _Nodes = Node.BuildNodes(6, 4, 20);
+            _Elements = Element.BuildElements(6, 4, 10);
+
+            return new Grid(_Nodes, _Elements);
         }
     }
 }
