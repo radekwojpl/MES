@@ -29,17 +29,30 @@ namespace MES_App.BasicStruct
         public static List<Element> BuildElements(int nh, int nl, int k)
         {
             var result = new List<Element>();
+            int leftPoint = 1;
+         
 
-            for (int i = 1; i < (nh * nl)- nh; i++)
+            for (int i = 1; i < (nh * nl) - nh; i++)
             {
-                var elemnt = new Element();
-                elemnt.K = k;
-                elemnt.NodesIDList.Add(i);
-                elemnt.NodesIDList.Add(i + 1);
-                elemnt.NodesIDList.Add(i + 6);
-                elemnt.NodesIDList.Add(i + 7);
+                int rightPoint = leftPoint + nh;
+                var tmp = new List<int>();
+                tmp.Add(leftPoint);
+                tmp.Add(rightPoint);
+                tmp.Add(rightPoint + 1);
+                tmp.Add(leftPoint + 1);
 
-                result.Add(elemnt);
+                if (i % nh != 0)
+                {
+                    var element = new Element();
+                    element.K = k;
+                    element.NodesIDList = tmp;
+                    leftPoint++;
+
+                    result.Add(element);
+                }
+
+
+
             }
             return result;
         }

@@ -36,9 +36,9 @@ namespace MES_App.BasicStruct
         {
             List<Node> nodes = new List<Node>();
 
-            for (int i = 0; i < nl; i++)
+            for (int i = 0; i <= 30; i+=10)
             {
-                for (int j = 0; j < nh; j++)
+                for (int j = 0; j <= 40; j+=8)
                 {
                     Node tmp = new Node();
                     tmp.X = i;
