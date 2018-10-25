@@ -46,6 +46,7 @@
     <Compile Include="Core\Element.cs" />
     <Compile Include="Core\Grid.cs" />
     <Compile Include="Core\Node.cs" />
+    <Compile Include="Core\UniversalElement.cs" />
     <Compile Include="DataLoaders\File\FileLoader.cs" />
     <Compile Include="DataLoaders\StartUpData.cs" />
     <Compile Include="Interfaces\IDataLoader.cs" />

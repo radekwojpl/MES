@@ -1,4 +1,5 @@
 ﻿using MES_App.BasicStruct;
+using MES_App.Core;
 using MES_App.DataLoaders.File;
 using MES_App.Interfaces;
 using MES_App.Managers;
@@ -22,6 +23,9 @@ namespace MES_App
 
            var grid= gridBuilder.BuildGrid();
 
+            var test = new UniversalElement(grid.Elements.ToArray(), grid.Nodes.ToArray());
+
+            Console.ReadKey();
         }
     }
 }
