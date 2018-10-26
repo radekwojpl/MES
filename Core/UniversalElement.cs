@@ -10,7 +10,7 @@ namespace MES_App.Core
 {
     class UniversalElement
     {
-        private Element [] _Element;
+        private Element[] _Element;
 
         public Element[] Element
         {
@@ -66,60 +66,59 @@ namespace MES_App.Core
             set { _JacobianMatrix = value; }
         }
 
-        public void BuildJacobianMatrix(out float[,] result, float[,] dnDeta, int rows, int columns,float[] points )
+        public void BuildJacobianMatrix(out float[,] result, UniversalPoint[] points)
         {
             result = new float[4, 4];
+
             float tmp = new float();
-            for (int i = 0; i < 1; i++)
+            tmp = 0.0f;
+
+            for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < 4; j++)
-                {
-                    tmp += points[j] * dnDeta[i, j];
-                }
-                tmp = 0.0f;
+                result[i, 0] = dN_dKSI[i, 0] * 0 + dN_dKSI[i, 1] * 10 + dN_dKSI[i , 2] * 10 + dN_dKSI[i, 3] * 0;
+                result[i, 1] = dN_dETA[i, 0] * 0 + dN_dETA[i, 1] * 10 + dN_dETA[i , 2] * 10 + dN_dETA[i, 3] * 0;
+                result[i, 2] = dN_dKSI[i, 0] * 0 + dN_dKSI[i, 1] * 0 +  dN_dKSI[i , 2] * 8 +  dN_dKSI[i, 3] * 8;
+                result[i, 3] = dN_dETA[i, 0] * 0 + dN_dETA[i, 1] * 0 +  dN_dETA[i , 2] * 8 +  dN_dETA[i, 3] * 8;
+
             }
 
             
+
         }
 
 
 
-        public UniversalElement(Element [] element, Node[] nodes)
+        public UniversalElement(Element[] element, Node[] nodes)
         {
             _Element = element;
             _Nodes = nodes;
 
-            UniversalElementGridPoints = new ArrayList();
-            _UniversalElementGridPoints.Add(new UniversalPoint(-1, -1));
-            _UniversalElementGridPoints.Add(new UniversalPoint(1, -1));
-            _UniversalElementGridPoints.Add(new UniversalPoint(1, 1));
-            _UniversalElementGridPoints.Add(new UniversalPoint(-1, 1));
-
-            _UniversalPoints[0]=(new UniversalPoint( -1 / (float)Math.Sqrt(3), -1 / (float)Math.Sqrt(3)) );
-            _UniversalPoints[1]=(new UniversalPoint(1 / (float)Math.Sqrt(3), -1 / (float)Math.Sqrt(3)));
-            _UniversalPoints[2]=(new UniversalPoint(1 / (float)Math.Sqrt(3), 1 / (float)Math.Sqrt(3)));
-            _UniversalPoints[3]=(new UniversalPoint(-1 / (float)Math.Sqrt(3), 1 / (float)Math.Sqrt(3)));
+       
+            _UniversalPoints[0] = (new UniversalPoint(-1 / (float)Math.Sqrt(3), -1 / (float)Math.Sqrt(3)));
+            _UniversalPoints[1] = (new UniversalPoint(1 / (float)Math.Sqrt(3), -1 / (float)Math.Sqrt(3)));
+            _UniversalPoints[2] = (new UniversalPoint(1 / (float)Math.Sqrt(3), 1 / (float)Math.Sqrt(3)));
+            _UniversalPoints[3] = (new UniversalPoint(-1 / (float)Math.Sqrt(3), 1 / (float)Math.Sqrt(3)));
 
 
-            CountFunctionShapeDerative_DN_Ksi(_UniversalPoints, out _dN_dKSI, 4, 4 );
+            CountFunctionShapeDerative_DN_Ksi(_UniversalPoints, out _dN_dKSI, 4, 4);
             CountFunctionShapeDerative_DN_ETA(_UniversalPoints, out _dN_dETA, 4, 4);
-            float[] points = new float[4];
-            points[0] = 0;
-            points[1] = 0.025f;
-            points[2] = 0.025f;
-            points[3] = 0;
+            UniversalPoint[] points = new UniversalPoint[4];
+            points[0] = new UniversalPoint(0, 0);
+            points[1] = new UniversalPoint(0.025f, 0);
+            points[2] = new UniversalPoint(0.025f, 0.025f);
+            points[3] = new UniversalPoint(0, 0.025f);
 
-            BuildJacobianMatrix(out _JacobianMatrix, _dN_dKSI, 4, 4, points);
+            BuildJacobianMatrix(out _JacobianMatrix, points);
 
-            Console.WriteLine(_dN_dETA.GetLength(0)); 
+            Console.WriteLine(_dN_dETA.GetLength(0));
 
         }
 
         public void CountFunctionShapeDerative_DN_Ksi(UniversalPoint[] point, out float[,] result, int rows, int columns)
         {
             float tmp;
-             result = new float[rows,columns];
-                    
+            result = new float[rows, columns];
+
             for (int i = 0; i < point.Length; i++)
             {
                 for (int j = 0; j < 4; j++)
@@ -128,25 +127,25 @@ namespace MES_App.Core
                     {
                         case 0:
                             tmp = -0.25f * (1.0f - point[i].Y);
-                            result[i,j] = tmp;
+                            result[i, j] = tmp;
                             break;
                         case 1:
                             tmp = 0.25f * (1.0f - point[i].Y);
-                            result[i,j] = tmp;
+                            result[i, j] = tmp;
                             break;
                         case 2:
                             tmp = 0.25f * (1.0f + point[i].Y);
-                            result[i,j]= tmp;
+                            result[i, j] = tmp;
                             break;
                         case 3:
                             tmp = -0.25f * (1.0f + point[i].Y);
-                            result[i,j] = tmp;
+                            result[i, j] = tmp;
                             break;
                     }
                 }
             }
 
-            
+
         }
 
         public void CountFunctionShapeDerative_DN_ETA(UniversalPoint[] point, out float[,] result, int rows, int columns)
