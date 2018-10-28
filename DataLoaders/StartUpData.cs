@@ -8,19 +8,19 @@ namespace MES_App.Core
 {
     public class StartUpData
     {
-        private double H;
-        private double L;
-        private double nh;
-        private double nl;
-        private double k;
-        private double t0;
+        public int H;
+        public int L;
+        public int nh;
+        public int nl;
+        public double k;
+        public double t0;
 
         public StartUpData(string[] tmp)
         {
-            H = double.Parse(tmp[0]);
-            L = double.Parse(tmp[1]);
-            nh = double.Parse(tmp[2]);
-            nl = double.Parse(tmp[3]);
+            H = int.Parse(tmp[0]);
+            L = int.Parse(tmp[1]);
+            nh = int.Parse(tmp[2]);
+            nl = int.Parse(tmp[3]);
             k = double.Parse(tmp[4]);
             t0 = double.Parse(tmp[5]);
         }

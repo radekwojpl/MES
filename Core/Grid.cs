@@ -30,7 +30,27 @@ namespace MES_App.BasicStruct
             set { _Elements = value; }
         }
 
-        
+       public List<Node> GetNodesByElement(Element element)
+        {
+            var result = new List<Node>();
+            foreach (var item in element.NodesIDList)
+            {
+                for (int i = 0; i <= item; i++)
+                {
+                    if (i == item-1)
+                    {
+                        result.Add(Nodes[i]);
+                    }
+                   
+                }
+            }
+            return result;
+        }
+
+        public Element GetElementByID( int id)
+        {
+            return Elements[id];
+        }
 
 
     }

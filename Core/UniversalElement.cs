@@ -10,21 +10,6 @@ namespace MES_App.Core
 {
     class UniversalElement
     {
-        private Element[] _Element;
-
-        public Element[] Element
-        {
-            get { return _Element; }
-            set { _Element = value; }
-        }
-
-        private Node[] _Nodes;
-
-        public Node[] Nodes
-        {
-            get { return _Nodes; }
-            set { _Nodes = value; }
-        }
 
         private UniversalPoint[] _UniversalPoints = new UniversalPoint[4];
 
@@ -32,14 +17,6 @@ namespace MES_App.Core
         {
             get { return _UniversalPoints; }
             set { _UniversalPoints = value; }
-        }
-
-        private ArrayList _UniversalElementGridPoints;
-
-        public ArrayList UniversalElementGridPoints
-        {
-            get { return _UniversalElementGridPoints; }
-            set { _UniversalElementGridPoints = value; }
         }
 
         private float[,] _dN_dETA;
@@ -58,59 +35,39 @@ namespace MES_App.Core
             set { _dN_dKSI = value; }
         }
 
-        private float[,] _JacobianMatrix;
+        /// <summary>
+        /// Przenies to do innej funkcji 
+        /// </summary>
+        //public void BuildJacobianMatrix(out float[,] result, UniversalPoint[] points)
+        //{
+        //    result = new float[4, 4];
 
-        public float[,] JacobianMatrix
+        //    for (int i = 0; i < 4; i++)
+        //    {
+        //        result[i, 0] = dN_dKSI[i, 0] * 0 + dN_dKSI[i, 1] * 10 + dN_dKSI[i , 2] * 10 + dN_dKSI[i, 3] * 0;
+        //        result[i, 1] = dN_dETA[i, 0] * 0 + dN_dETA[i, 1] * 10 + dN_dETA[i , 2] * 10 + dN_dETA[i, 3] * 0;
+        //        result[i, 2] = dN_dKSI[i, 0] * 0 + dN_dKSI[i, 1] * 0 +  dN_dKSI[i , 2] * 8 +  dN_dKSI[i, 3] * 8;
+        //        result[i, 3] = dN_dETA[i, 0] * 0 + dN_dETA[i, 1] * 0 +  dN_dETA[i , 2] * 8 +  dN_dETA[i, 3] * 8;
+
+        //    }
+        //}
+
+        public void SetUp()
         {
-            get { return _JacobianMatrix; }
-            set { _JacobianMatrix = value; }
+            var tmp = 1 / (float)Math.Sqrt(3);
+            _UniversalPoints[0] = new UniversalPoint(-tmp,  -tmp);
+            _UniversalPoints[1] = new UniversalPoint( tmp, -tmp);
+            _UniversalPoints[2] = new UniversalPoint( tmp,  tmp);
+            _UniversalPoints[3] = new UniversalPoint(-tmp,  tmp);
         }
 
-        public void BuildJacobianMatrix(out float[,] result, UniversalPoint[] points)
+        public UniversalElement()
         {
-            result = new float[4, 4];
-
-            float tmp = new float();
-            tmp = 0.0f;
-
-            for (int i = 0; i < 4; i++)
-            {
-                result[i, 0] = dN_dKSI[i, 0] * 0 + dN_dKSI[i, 1] * 10 + dN_dKSI[i , 2] * 10 + dN_dKSI[i, 3] * 0;
-                result[i, 1] = dN_dETA[i, 0] * 0 + dN_dETA[i, 1] * 10 + dN_dETA[i , 2] * 10 + dN_dETA[i, 3] * 0;
-                result[i, 2] = dN_dKSI[i, 0] * 0 + dN_dKSI[i, 1] * 0 +  dN_dKSI[i , 2] * 8 +  dN_dKSI[i, 3] * 8;
-                result[i, 3] = dN_dETA[i, 0] * 0 + dN_dETA[i, 1] * 0 +  dN_dETA[i , 2] * 8 +  dN_dETA[i, 3] * 8;
-
-            }
-
             
-
-        }
-
-
-
-        public UniversalElement(Element[] element, Node[] nodes)
-        {
-            _Element = element;
-            _Nodes = nodes;
-
-       
-            _UniversalPoints[0] = (new UniversalPoint(-1 / (float)Math.Sqrt(3), -1 / (float)Math.Sqrt(3)));
-            _UniversalPoints[1] = (new UniversalPoint(1 / (float)Math.Sqrt(3), -1 / (float)Math.Sqrt(3)));
-            _UniversalPoints[2] = (new UniversalPoint(1 / (float)Math.Sqrt(3), 1 / (float)Math.Sqrt(3)));
-            _UniversalPoints[3] = (new UniversalPoint(-1 / (float)Math.Sqrt(3), 1 / (float)Math.Sqrt(3)));
-
+            SetUp();
 
             CountFunctionShapeDerative_DN_Ksi(_UniversalPoints, out _dN_dKSI, 4, 4);
             CountFunctionShapeDerative_DN_ETA(_UniversalPoints, out _dN_dETA, 4, 4);
-            UniversalPoint[] points = new UniversalPoint[4];
-            points[0] = new UniversalPoint(0, 0);
-            points[1] = new UniversalPoint(0.025f, 0);
-            points[2] = new UniversalPoint(0.025f, 0.025f);
-            points[3] = new UniversalPoint(0, 0.025f);
-
-            BuildJacobianMatrix(out _JacobianMatrix, points);
-
-            Console.WriteLine(_dN_dETA.GetLength(0));
 
         }
 
@@ -182,34 +139,6 @@ namespace MES_App.Core
 
         }
 
-        #region UniversalPoint Class
-        public class UniversalPoint
-        {
-            private float _X;
 
-            public float X
-            {
-                get { return _X; }
-                set { _X = value; }
-            }
-
-            private float _Y;
-
-            public float Y
-            {
-                get { return _Y; }
-                set { _Y = value; }
-
-
-            }
-
-            public UniversalPoint(float x, float y)
-            {
-                _X = x;
-                _Y = y;
-            }
-
-        }
-        #endregion
     }
 }

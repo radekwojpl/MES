@@ -8,37 +8,42 @@ namespace MES_App.BasicStruct
 {
     public class Node
     {
-        private double _X;
+        private float _X;
 
-        public double X
+        public float X
         {
             get { return _X; }
             set { _X = value; }
         }
 
-        private double _Y;
+        private float _Y;
 
-        public double Y
+        public float Y
         {
             get { return _Y; }
             set { _Y = value; }
         }
 
-        private double _T;
+        private float _T;
 
-        public double T
+        public float T
         {
             get { return _T; }
             set { _T = value; }
         }
 
-        public static List<Node> BuildNodes(int nh, int nl, double t)
+        //TODO zmienić to na dane z pliku 
+        public static List<Node> BuildNodes(int nh, int nl, int L, int H, float t)
         {
             List<Node> nodes = new List<Node>();
 
-            for (int i = 0; i <= 30; i+=10)
+            int deltax = H / (nh - 1);
+            int deltay = L / (nl - 1);
+
+
+            for (int i = 0; i <= L; i += deltay)
             {
-                for (int j = 0; j <= 40; j+=8)
+                for (int j = 0; j <= H; j += deltax)
                 {
                     Node tmp = new Node();
                     tmp.X = i;
