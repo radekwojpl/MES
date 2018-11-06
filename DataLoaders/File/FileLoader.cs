@@ -15,7 +15,7 @@ namespace MES_App.DataLoaders.File
         {
             try
             {
-                using (StreamReader sr = new StreamReader(@"C:\Resources\Data.txt"))
+                using (StreamReader sr = new StreamReader(@"C:\MesApp\MES\TextFile1.txt"))
                 {
                   
                     string line = sr.ReadLine();

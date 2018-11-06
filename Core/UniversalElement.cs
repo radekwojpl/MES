@@ -1,4 +1,5 @@
 ﻿using MES_App.BasicStruct;
+using MES_App.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace MES_App.Core
 {
-    class UniversalElement
+    class UniversalElement : IUniversalElement
     {
 
-        private UniversalPoint[] _UniversalPoints = new UniversalPoint[4];
+        private UniversalPoint[] _PointsOfIntegration = new UniversalPoint[4];
 
-        public UniversalPoint[] UniversalPoints
+        public UniversalPoint[] PointsOfIntegration
         {
-            get { return _UniversalPoints; }
-            set { _UniversalPoints = value; }
+            get { return _PointsOfIntegration; }
+            set { _PointsOfIntegration = value; }
         }
 
         private float[,] _dN_dETA;
@@ -35,43 +36,31 @@ namespace MES_App.Core
             set { _dN_dKSI = value; }
         }
 
-        /// <summary>
-        /// Przenies to do innej funkcji 
-        /// </summary>
-        //public void BuildJacobianMatrix(out float[,] result, UniversalPoint[] points)
-        //{
-        //    result = new float[4, 4];
 
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        result[i, 0] = dN_dKSI[i, 0] * 0 + dN_dKSI[i, 1] * 10 + dN_dKSI[i , 2] * 10 + dN_dKSI[i, 3] * 0;
-        //        result[i, 1] = dN_dETA[i, 0] * 0 + dN_dETA[i, 1] * 10 + dN_dETA[i , 2] * 10 + dN_dETA[i, 3] * 0;
-        //        result[i, 2] = dN_dKSI[i, 0] * 0 + dN_dKSI[i, 1] * 0 +  dN_dKSI[i , 2] * 8 +  dN_dKSI[i, 3] * 8;
-        //        result[i, 3] = dN_dETA[i, 0] * 0 + dN_dETA[i, 1] * 0 +  dN_dETA[i , 2] * 8 +  dN_dETA[i, 3] * 8;
-
-        //    }
-        //}
 
         public void SetUp()
         {
             var tmp = 1 / (float)Math.Sqrt(3);
-            _UniversalPoints[0] = new UniversalPoint(-tmp,  -tmp);
-            _UniversalPoints[1] = new UniversalPoint( tmp, -tmp);
-            _UniversalPoints[2] = new UniversalPoint( tmp,  tmp);
-            _UniversalPoints[3] = new UniversalPoint(-tmp,  tmp);
+            _PointsOfIntegration[0] = new UniversalPoint(-tmp, -tmp);
+            _PointsOfIntegration[1] = new UniversalPoint(tmp, -tmp);
+            _PointsOfIntegration[2] = new UniversalPoint(tmp, tmp);
+            _PointsOfIntegration[3] = new UniversalPoint(-tmp, tmp);
         }
 
         public UniversalElement()
         {
-            
+
             SetUp();
 
-            CountFunctionShapeDerative_DN_Ksi(_UniversalPoints, out _dN_dKSI, 4, 4);
-            CountFunctionShapeDerative_DN_ETA(_UniversalPoints, out _dN_dETA, 4, 4);
+            int rows = 4;
+            int columns = 4;
+
+            CountFunctionShapeDerative_DN_Ksi(_PointsOfIntegration, out _dN_dKSI, rows, columns);
+            CountFunctionShapeDerative_DN_ETA(_PointsOfIntegration, out _dN_dETA, rows, columns);
 
         }
 
-        public void CountFunctionShapeDerative_DN_Ksi(UniversalPoint[] point, out float[,] result, int rows, int columns)
+        private void CountFunctionShapeDerative_DN_Ksi(UniversalPoint[] point, out float[,] result, int rows, int columns)
         {
             float tmp;
             result = new float[rows, columns];
@@ -105,7 +94,7 @@ namespace MES_App.Core
 
         }
 
-        public void CountFunctionShapeDerative_DN_ETA(UniversalPoint[] point, out float[,] result, int rows, int columns)
+        private void CountFunctionShapeDerative_DN_ETA(UniversalPoint[] point, out float[,] result, int rows, int columns)
         {
             float tmp;
             result = new float[rows, columns];

@@ -30,7 +30,7 @@ namespace MES_App
             ElementByID GetElementByID = grid.GetElementByID;
             NodesByElement GetNodesByElement = grid.GetNodesByElement;
 
-            var universalElement = new UniversalElement();
+            IUniversalElement universalElement = new UniversalElement();
             float[,] jacobianMatrix;
             float[] detJacobianMatrix;
 
@@ -42,7 +42,7 @@ namespace MES_App
            
         }
 
-        public static void BuildJacobiaMatrix(out float[,] result, List<Node> points, UniversalElement universalElement)
+        public static void BuildJacobiaMatrix(out float[,] result, List<Node> points, IUniversalElement universalElement)
         {
             result = new float[4, 4];
 

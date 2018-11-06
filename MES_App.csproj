@@ -51,6 +51,7 @@
     <Compile Include="DataLoaders\File\FileLoader.cs" />
     <Compile Include="DataLoaders\StartUpData.cs" />
     <Compile Include="Interfaces\IDataLoader.cs" />
+    <Compile Include="Interfaces\IUniversalElement.cs" />
     <Compile Include="Managers\GridBuilderFacade.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -62,7 +63,7 @@
     <Folder Include="DataLoaders\Files\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data.txt" />
+    <Content Include="TextFile1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

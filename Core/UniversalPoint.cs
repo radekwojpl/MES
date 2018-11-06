@@ -23,7 +23,6 @@ namespace MES_App.Core
             get { return _Y; }
             set { _Y = value; }
 
-
         }
 
         public UniversalPoint(float x, float y)

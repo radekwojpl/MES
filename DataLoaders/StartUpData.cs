@@ -24,6 +24,10 @@ namespace MES_App.Core
             k = double.Parse(tmp[4]);
             t0 = double.Parse(tmp[5]);
         }
+        public StartUpData()
+        {
+
+        }
 
     }
 }
