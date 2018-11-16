@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MES_App.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,6 @@ namespace MES_App.BasicStruct
         }
 
 
-
         public static List<Element> BuildElements(int nh, int nl, int k)
         {
             var result = new List<Element>();
@@ -50,8 +50,6 @@ namespace MES_App.BasicStruct
 
                     result.Add(element);
                 }
-
-
 
             }
             return result;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MES_App.Core
 {
-    class UniversalElement : IUniversalElement
+   public class UniversalElement : IUniversalElement
     {
 
         private UniversalPoint[] _PointsOfIntegration = new UniversalPoint[4];

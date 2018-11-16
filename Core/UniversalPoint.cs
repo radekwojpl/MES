@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MES_App.Core
 {
-    class UniversalPoint
+   public class UniversalPoint
     {
         private float _X;
 

@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataLoaders\Files\" />
+    <Folder Include="ExtensionMethod\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TextFile1.txt" />

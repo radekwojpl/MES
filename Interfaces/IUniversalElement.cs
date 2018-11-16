@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MES_App.Interfaces
 {
-    interface IUniversalElement
+    public interface IUniversalElement
     {
        
         UniversalPoint[] PointsOfIntegration { get; set; }

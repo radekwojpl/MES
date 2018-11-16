@@ -8,6 +8,16 @@ namespace MES_App.BasicStruct
 {
     public class Node
     {
+        public Node()
+        {
+
+        }
+
+        public Node(float x, float y)
+        {
+            _X = x;
+            _Y = y;
+        }
         private float _X;
 
         public float X
