@@ -13,10 +13,11 @@ namespace MES_App.BasicStruct
 
         }
 
-        public Node(float x, float y)
+        public Node(float x, float y, float t)
         {
             _X = x;
             _Y = y;
+            _T = t;
         }
         private float _X;
 
@@ -42,6 +43,15 @@ namespace MES_App.BasicStruct
             set { _T = value; }
         }
 
+        private bool _BC = false;
+
+        public bool BC
+        {
+            get { return _BC; }
+            set { _BC = value; }
+        }
+
+
         //TODO zmienić to na dane z pliku 
         public static List<Node> BuildNodes(int nh, int nl, int L, int H, float t)
         {
@@ -55,14 +65,30 @@ namespace MES_App.BasicStruct
             {
                 for (int j = 0; j <= H; j += deltax)
                 {
-                    Node tmp = new Node();
-                    tmp.X = i;
-                    tmp.Y = j;
-                    tmp.T = t;
-                    nodes.Add(tmp);
+                    if (i == 0 || j == 0)
+                    {
+                        Node tmp = new Node(i, j, t);
+                        tmp.BC = true;
+                        nodes.Add(tmp);
+                    }
+                    else if (i == L  || j == H)
+                    {
+                        Node tmp = new Node(i, j, t);
+                        tmp.BC = true;
+                        nodes.Add(tmp);
+                    }
+                    else
+                    {
+                        Node tmp = new Node(i, j, t);
+                        nodes.Add(tmp);
+                    }
+                  
                 }
             }
+
             return nodes;
         }
+
+       
     }
 }

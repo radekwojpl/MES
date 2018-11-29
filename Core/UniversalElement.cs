@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MES_App.Core
 {
-   public class UniversalElement : IUniversalElement
+    public class UniversalElement : IUniversalElement
     {
 
         private UniversalPoint[] _PointsOfIntegration = new UniversalPoint[4];
@@ -36,6 +36,13 @@ namespace MES_App.Core
             set { _dN_dKSI = value; }
         }
 
+        private float[,] _N;
+
+        public float[,] N
+        {
+            get { return _N; }
+            set { _N = value; }
+        }
 
 
         public void SetUp()
@@ -57,7 +64,7 @@ namespace MES_App.Core
 
             CountFunctionShapeDerative_DN_Ksi(_PointsOfIntegration, out _dN_dKSI, rows, columns);
             CountFunctionShapeDerative_DN_ETA(_PointsOfIntegration, out _dN_dETA, rows, columns);
-
+            CountValueForPointOfIntegrationForFunctionShape(_PointsOfIntegration, out _N, rows, columns);
         }
 
         private void CountFunctionShapeDerative_DN_Ksi(UniversalPoint[] point, out float[,] result, int rows, int columns)
@@ -126,6 +133,38 @@ namespace MES_App.Core
             }
 
 
+        }
+
+        private void CountValueForPointOfIntegrationForFunctionShape(UniversalPoint[] point, out float[,] result, int rows, int columns)
+        {
+            float tmp;
+            result = new float[rows, columns];
+
+            for (int i = 0; i < point.Length; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    switch (j)
+                    {
+                        case 0:
+                            tmp = 0.25f * (1.0f - point[i].X) * (1.0f - point[i].Y);
+                            result[i, j] = tmp;
+                            break;
+                        case 1:
+                            tmp = 0.25f * (1.0f + point[i].X) * (1.0f - point[i].Y);
+                            result[i, j] = tmp;
+                            break;
+                        case 2:
+                            tmp = 0.25f * (1.0f + point[i].X) * (1.0f + point[i].Y);
+                            result[i, j] = tmp;
+                            break;
+                        case 3:
+                            tmp = 0.25f * (1.0f - point[i].X) * (1.0f + point[i].Y);
+                            result[i, j] = tmp;
+                            break;
+                    }
+                }
+            }
         }
 
 

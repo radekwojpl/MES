@@ -51,17 +51,18 @@
     <Compile Include="DataLoaders\File\FileLoader.cs" />
     <Compile Include="DataLoaders\StartUpData.cs" />
     <Compile Include="Interfaces\IDataLoader.cs" />
+    <Compile Include="Interfaces\IMatrixH.cs" />
     <Compile Include="Interfaces\IUniversalElement.cs" />
     <Compile Include="Managers\GridBuilderFacade.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\MatrixHProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataLoaders\Files\" />
-    <Folder Include="ExtensionMethod\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TextFile1.txt" />
