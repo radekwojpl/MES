@@ -76,7 +76,15 @@ namespace MES_App
             Console.WriteLine('\n');
 
             PrintMatrix(_MatrixHProvier.MatrixH);
+            Console.WriteLine('\n');
+
+            MatrixCProvider matrixCProvider = new MatrixCProvider(universalElement, 7800, 700,detJacobianMatrix);
+            Console.WriteLine('\n');
+
+            PrintMatrix(matrixCProvider.MatrixC);
+
             Console.ReadKey();
+
 
         }
         #region  BuildJacobian cos tam

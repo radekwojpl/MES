@@ -14,6 +14,7 @@ namespace MES_App.Interfaces
         float[,] dN_dETA { get; set; }
         float[,] dN_dKSI { get; set; }
         float[,] N { get; set; }
+     
 
     }
 }
