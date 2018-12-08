@@ -59,6 +59,7 @@
     <Compile Include="Providers\BorderContitionMatrixHProvider.cs" />
     <Compile Include="Providers\MatrixCProvider.cs" />
     <Compile Include="Providers\MatrixHProvider.cs" />
+    <Compile Include="Providers\VectorPProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

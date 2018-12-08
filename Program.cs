@@ -44,6 +44,8 @@ namespace MES_App
             BuildDetFromJacobianMatrix(out detJacobianMatrix, jacobianMatrix);
             ReversJacobian(jacobianMatrix, detJacobianMatrix, out fullJacobian, 4, 4);
 
+         
+
             PrintMatrix(universalElement.N);
             Console.WriteLine('\n');
             Console.WriteLine('\n');
@@ -82,6 +84,16 @@ namespace MES_App
             Console.WriteLine('\n');
 
             PrintMatrix(matrixCProvider.MatrixC);
+
+            Console.WriteLine('\n');
+
+            Console.WriteLine('\n');
+            UniversalPoint[] points = new UniversalPoint[2];
+            points[0] = new UniversalPoint(-0.577350f, -1);
+            points[1] = new UniversalPoint(0.577350f, 1);
+            BorderContitionMatrixHProvider borderContitionMatrixHProvider = new BorderContitionMatrixHProvider(points, 5, 10);
+
+            PrintMatrix(borderContitionMatrixHProvider.Result);
 
             Console.ReadKey();
 

@@ -20,6 +20,15 @@ namespace MES_App.Core
             set { _PointsOfIntegration = value; }
         }
 
+        private UniversalPoint[] _SurfacePointsOfIntegration = new UniversalPoint[8];
+
+        public UniversalPoint[] SurfacePointsOfIntegration
+        {
+            get { return _SurfacePointsOfIntegration; }
+            set { _SurfacePointsOfIntegration = value; }
+        }
+
+
         private float[,] _dN_dETA;
 
         public float[,] dN_dETA
@@ -52,6 +61,19 @@ namespace MES_App.Core
             _PointsOfIntegration[1] = new UniversalPoint(tmp, -tmp);
             _PointsOfIntegration[2] = new UniversalPoint(tmp, tmp);
             _PointsOfIntegration[3] = new UniversalPoint(-tmp, tmp);
+
+            _SurfacePointsOfIntegration[0] = new UniversalPoint(-tmp, -1);
+            _SurfacePointsOfIntegration[1] = new UniversalPoint(tmp, -1);
+            _SurfacePointsOfIntegration[2] = new UniversalPoint(1, -tmp);
+            _SurfacePointsOfIntegration[3] = new UniversalPoint(1, tmp);
+
+            _SurfacePointsOfIntegration[4] = new UniversalPoint(tmp, 1);
+            _SurfacePointsOfIntegration[5] = new UniversalPoint(-tmp, 1);
+            _SurfacePointsOfIntegration[6] = new UniversalPoint(-1, tmp);
+            _SurfacePointsOfIntegration[7] = new UniversalPoint(-1, -tmp);
+
+
+
         }
 
         public UniversalElement()
