@@ -21,7 +21,7 @@ namespace MES_App.DataLoaders.File
                     string line = sr.ReadLine();
                     string[] tmp = line.Split(',');
 
-                    return new StartUpData(tmp);
+                    return null;
                 }
             }
             catch (Exception)

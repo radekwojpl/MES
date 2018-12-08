@@ -1,8 +1,8 @@
 ﻿using MES_App.BasicStruct;
+using MES_App.Controller;
 using MES_App.Core;
 using MES_App.DataLoaders.File;
 using MES_App.Interfaces;
-using MES_App.Managers;
 using MES_App.Providers;
 using System;
 using System.Collections.Generic;
@@ -16,84 +16,16 @@ namespace MES_App
     class Program
     {
 
-        delegate Element ElementByID(int id);
-        delegate List<Node> NodesByElement(Element element);
-
         static void Main(string[] args)
         {
-            IDataLoader dataLoader = new FileLoader();
-
-            var tmp = dataLoader.LoadData();
-
-            GridBuilderFacade gridBuilder = new GridBuilderFacade();
-
-            var grid = gridBuilder.BuildGrid(tmp);
-
-            ElementByID GetElementByID = grid.GetElementByID;
-            NodesByElement GetNodesByElement = grid.GetNodesByElement;
-
-            IUniversalElement universalElement = new UniversalElement();
-            float[,] jacobianMatrix = new float [4,4];
-            float[] detJacobianMatrix = new float[4];
-            float[,] fullJacobian = new float[4, 4];
+            StartUpData startUPData = new StartUpData(100, 500, 50, 1200, 300, 0.1f, 0.1f, 4, 4, 700, 25, 780);
+            GridController GridEngine = new GridController(startUPData);
 
 
+            for (float i = 0; i < startUPData.SimulationTime; i+= startUPData.SimulationStepTime)
+            {
 
-            var elemntPoints = GetNodesByElement(GetElementByID(0));
-            BuildJacobiaMatrix(out jacobianMatrix, elemntPoints, universalElement);
-            BuildDetFromJacobianMatrix(out detJacobianMatrix, jacobianMatrix);
-            ReversJacobian(jacobianMatrix, detJacobianMatrix, out fullJacobian, 4, 4);
-
-         
-
-            PrintMatrix(universalElement.N);
-            Console.WriteLine('\n');
-            Console.WriteLine('\n');
-
-            PrintMatrix(universalElement.dN_dKSI);
-            Console.WriteLine('\n');
-
-            Console.WriteLine('\n');
-
-            PrintMatrix(universalElement.dN_dETA);
-
-            Console.WriteLine('\n');
-
-            PrintMatrix(jacobianMatrix);
-            Console.WriteLine('\n');
-
-
-            PrintMatrix(fullJacobian);
-
-            Console.WriteLine('\n');
-
-            IMatrixH _MatrixHProvier = new MatrixHProvider(universalElement, fullJacobian, detJacobianMatrix, 30.0f );
-
-            PrintMatrix(_MatrixHProvier.dNx_dx);
-
-            Console.WriteLine('\n');
-
-            PrintMatrix(_MatrixHProvier.dNx_dy);
-
-            Console.WriteLine('\n');
-
-            PrintMatrix(_MatrixHProvier.MatrixH);
-            Console.WriteLine('\n');
-
-            MatrixCProvider matrixCProvider = new MatrixCProvider(universalElement, 7800, 700,detJacobianMatrix);
-            Console.WriteLine('\n');
-
-            PrintMatrix(matrixCProvider.MatrixC);
-
-            Console.WriteLine('\n');
-
-            Console.WriteLine('\n');
-            UniversalPoint[] points = new UniversalPoint[2];
-            points[0] = new UniversalPoint(-0.577350f, -1);
-            points[1] = new UniversalPoint(0.577350f, 1);
-            BorderContitionMatrixHProvider borderContitionMatrixHProvider = new BorderContitionMatrixHProvider(points, 5, 10);
-
-            PrintMatrix(borderContitionMatrixHProvider.Result);
+            }
 
             Console.ReadKey();
 

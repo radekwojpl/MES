@@ -8,25 +8,45 @@ namespace MES_App.Core
 {
     public class StartUpData
     {
-        public int H;
-        public int L;
-        public int nh;
-        public int nl;
-        public double k;
-        public double t0;
+        public float InitialTemperature;
+        public float SimulationTime;
+        public float SimulationStepTime;
+        public float AmbitientTemperature;
+        public float Alfa;
+        public float H;
+        public float B;
+        public float N_H;
+        public float N_B;
+        public float SpecificHeat;
+        public float Conductivity;
+        public float Density;
 
-        public StartUpData(string[] tmp)
+        public StartUpData(float initialTemp,
+                           float simulationTime,
+                           float simulationStepTime,
+                           float ambitientTemp,
+                           float alfa,
+                           float h,
+                           float b,
+                           float n_h,
+                           float n_b,
+                           float specificHeat,
+                           float conductivity,
+                           float density
+                           )
         {
-            H = int.Parse(tmp[0]);
-            L = int.Parse(tmp[1]);
-            nh = int.Parse(tmp[2]);
-            nl = int.Parse(tmp[3]);
-            k = double.Parse(tmp[4]);
-            t0 = double.Parse(tmp[5]);
-        }
-        public StartUpData()
-        {
-
+            InitialTemperature = initialTemp;
+            SimulationTime = simulationTime;
+            SimulationStepTime = simulationStepTime;
+            AmbitientTemperature = ambitientTemp;
+            Alfa = alfa;
+            H = h;
+            B = b;
+            N_H = n_h;
+            N_B = n_b;
+            SpecificHeat = specificHeat;
+            Conductivity = conductivity;
+            Density = density;
         }
 
     }

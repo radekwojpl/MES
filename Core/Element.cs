@@ -9,9 +9,9 @@ namespace MES_App.BasicStruct
 {
     public class Element
     {
-        private List<int> _NodesIDList = new List<int>();
+        private List<float> _NodesIDList = new List<float>();
 
-        public List<int> NodesIDList
+        public List<float> NodesIDList
         {
             get { return _NodesIDList; }
             set { _NodesIDList = value; }
@@ -26,16 +26,16 @@ namespace MES_App.BasicStruct
         }
 
 
-        public static List<Element> BuildElements(int nh, int nl, int k)
+        public static List<Element> BuildElements(float nh, float nb, float conductivity)
         {
             var result = new List<Element>();
             int leftPoint = 1;
          
 
-            for (int i = 1; i < (nh * nl) - nh; i++)
+            for (float i = 1; i < (nh * nb) - nh; i++)
             {
-                int rightPoint = leftPoint + nh;
-                var tmp = new List<int>();
+                float rightPoint = leftPoint + nh;
+                var tmp = new List<float>();
                 tmp.Add(leftPoint);
                 tmp.Add(rightPoint);
                 tmp.Add(rightPoint + 1);
@@ -44,7 +44,7 @@ namespace MES_App.BasicStruct
                 if (i % nh != 0)
                 {
                     var element = new Element();
-                    element.K = k;
+                    element.K = conductivity;
                     element.NodesIDList = tmp;
                     leftPoint++;
 

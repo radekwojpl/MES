@@ -53,42 +53,44 @@ namespace MES_App.BasicStruct
 
 
         //TODO zmienić to na dane z pliku 
-        public static List<Node> BuildNodes(int nh, int nl, int L, int H, float t)
+        public static List<Node> BuildNodes(float nh, float nb, float H, float B, float initailTemperature)
         {
             List<Node> nodes = new List<Node>();
 
-            int deltax = H / (nh - 1);
-            int deltay = L / (nl - 1);
+            var cos = 0.1 / (4 - 1);
 
+            float deltax = H / (nh - 1);
+            float deltay = B / (nh - 1);
+            
 
-            for (int i = 0; i <= L; i += deltay)
+            for (float i = 0f; i < B; i += deltay)
             {
-                for (int j = 0; j <= H; j += deltax)
+                for (float j = 0; j < H; j += deltax)
                 {
                     if (i == 0 || j == 0)
                     {
-                        Node tmp = new Node(i, j, t);
+                        Node tmp = new Node(i, j, initailTemperature);
                         tmp.BC = true;
                         nodes.Add(tmp);
                     }
-                    else if (i == L  || j == H)
+                    else if (i == B || j == H)
                     {
-                        Node tmp = new Node(i, j, t);
+                        Node tmp = new Node(i, j, initailTemperature);
                         tmp.BC = true;
                         nodes.Add(tmp);
                     }
                     else
                     {
-                        Node tmp = new Node(i, j, t);
+                        Node tmp = new Node(i, j, initailTemperature);
                         nodes.Add(tmp);
                     }
-                  
+
                 }
             }
 
             return nodes;
         }
 
-       
+
     }
 }
