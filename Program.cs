@@ -18,11 +18,11 @@ namespace MES_App
 
         static void Main(string[] args)
         {
-            StartUpData startUPData = new StartUpData(100, 500, 50, 1200, 300, 0.1f, 0.1f, 4, 4, 700, 25, 780);
+            StartUpData startUPData = new StartUpData(100, 500, 50, 1200, 300, 0.1, 0.1, 4, 4, 700, 25, 780);
             GridController GridEngine = new GridController(startUPData);
 
 
-            for (float i = 0; i < startUPData.SimulationTime; i+= startUPData.SimulationStepTime)
+            for (double i = 0; i < startUPData.SimulationTime; i+= startUPData.SimulationStepTime)
             {
 
             }
@@ -33,9 +33,9 @@ namespace MES_App
         }
         #region  BuildJacobian cos tam
 
-        public static void BuildJacobiaMatrix(out float[,] result, List<Node> points, IUniversalElement universalElement)
+        public static void BuildJacobiaMatrix(out double[,] result, List<Node> points, IUniversalElement universalElement)
         {
-            result = new float[4, 4];
+            result = new double[4, 4];
 
             for (int i = 0; i < 4; i++)
             {
@@ -48,9 +48,9 @@ namespace MES_App
 
         }
 
-        public static void BuildDetFromJacobianMatrix(out float[] result, float[,] jacobianMatrix)
+        public static void BuildDetFromJacobianMatrix(out double[] result, double[,] jacobianMatrix)
         {
-            result = new float[4];
+            result = new double[4];
             for (int i = 0; i < 4; i++)
             {
 
@@ -58,9 +58,9 @@ namespace MES_App
             }
         }
 
-        public static void ReversJacobian(float[,] jacobian, float[] detJacobian, out float[,] result, int row, int column)
+        public static void ReversJacobian(double[,] jacobian, double[] detJacobian, out double[,] result, int row, int column)
         {
-            result = new float[row, column];
+            result = new double[row, column];
 
             for (int i = 0; i < 4; i++)
             {
@@ -76,7 +76,7 @@ namespace MES_App
 
         #endregion
 
-        public static void PrintMatrix(float[,] cos)
+        public static void PrintMatrix(double[,] cos)
         {
             for (int i = 0; i < 4; i++)
             {

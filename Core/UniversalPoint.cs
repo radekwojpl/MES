@@ -8,24 +8,24 @@ namespace MES_App.Core
 {
    public class UniversalPoint
     {
-        private float _X;
+        private double _X;
 
-        public float X
+        public double X
         {
             get { return _X; }
             set { _X = value; }
         }
 
-        private float _Y;
+        private double _Y;
 
-        public float Y
+        public double Y
         {
             get { return _Y; }
             set { _Y = value; }
 
         }
 
-        public UniversalPoint(float x, float y)
+        public UniversalPoint(double x, double y)
         {
             _X = x;
             _Y = y;

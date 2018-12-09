@@ -8,31 +8,31 @@ namespace MES_App.Core
 {
     public class StartUpData
     {
-        public float InitialTemperature;
-        public float SimulationTime;
-        public float SimulationStepTime;
-        public float AmbitientTemperature;
-        public float Alfa;
-        public float H;
-        public float B;
-        public float N_H;
-        public float N_B;
-        public float SpecificHeat;
-        public float Conductivity;
-        public float Density;
+        public double InitialTemperature;
+        public double SimulationTime;
+        public double SimulationStepTime;
+        public double AmbitientTemperature;
+        public double Alfa;
+        public double H;
+        public double B;
+        public double N_H;
+        public double N_B;
+        public double SpecificHeat;
+        public double Conductivity;
+        public double Density;
 
-        public StartUpData(float initialTemp,
-                           float simulationTime,
-                           float simulationStepTime,
-                           float ambitientTemp,
-                           float alfa,
-                           float h,
-                           float b,
-                           float n_h,
-                           float n_b,
-                           float specificHeat,
-                           float conductivity,
-                           float density
+        public StartUpData(double initialTemp,
+                           double simulationTime,
+                           double simulationStepTime,
+                           double ambitientTemp,
+                           double alfa,
+                           double h,
+                           double b,
+                           double n_h,
+                           double n_b,
+                           double specificHeat,
+                           double conductivity,
+                           double density
                            )
         {
             InitialTemperature = initialTemp;

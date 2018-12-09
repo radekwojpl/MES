@@ -9,7 +9,7 @@ namespace MES_App.Providers
 {
     class MatrixCProvider
     {
-        public MatrixCProvider(IUniversalElement universalElement, float ro, float c, float[] detJ)
+        public MatrixCProvider(IUniversalElement universalElement, double ro, double c, double[] detJ)
         {
             _UniversalElement = universalElement;
             _Ro = ro;
@@ -19,26 +19,26 @@ namespace MES_App.Providers
             CountMatrixC();
         }
 
-        private float[] _DetJ;
+        private double[] _DetJ;
 
-        public float[] DetJ
+        public double[] DetJ
         {
             get { return _DetJ; }
             set { _DetJ = value; }
         }
 
 
-        private float _Ro;
+        private double _Ro;
 
-        public float Ro
+        public double Ro
         {
             get { return _Ro; }
             set { _Ro = value; }
         }
 
-        private float _C;
+        private double _C;
 
-        public float C
+        public double C
         {
             get { return _C; }
             set { _C = value; }
@@ -52,9 +52,9 @@ namespace MES_App.Providers
             set { _UniversalElement = value; }
         }
 
-        private float[,] _MatrixC;
+        private double[,] _MatrixC;
 
-        public float[,] MatrixC
+        public double[,] MatrixC
         {
             get { return _MatrixC; }
             set { _MatrixC = value; }
@@ -63,11 +63,11 @@ namespace MES_App.Providers
         private void CountMatrixC()
         {
           
-            List<float[,]> tmp = new List<float[,]>();
+            List<double[,]> tmp = new List<double[,]>();
 
             for (int i = 0; i < 4; i++)
             {
-                float[,] PointOfIntegration = new float[4, 4];
+                double[,] PointOfIntegration = new double[4, 4];
                 for (int j = 0; j < 4; j++)
                 {
                     for (int k = 0; k < 4; k++)
@@ -78,7 +78,7 @@ namespace MES_App.Providers
                 tmp.Add(PointOfIntegration);
             }
 
-            _MatrixC = new float[4, 4];
+            _MatrixC = new double[4, 4];
 
             for (int i = 0; i < 4; i++)
             {

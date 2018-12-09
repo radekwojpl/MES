@@ -13,31 +13,31 @@ namespace MES_App.BasicStruct
 
         }
 
-        public Node(float x, float y, float t)
+        public Node(double x, double y, double t)
         {
             _X = x;
             _Y = y;
             _T = t;
         }
-        private float _X;
+        private double _X;
 
-        public float X
+        public double X
         {
             get { return _X; }
             set { _X = value; }
         }
 
-        private float _Y;
+        private double _Y;
 
-        public float Y
+        public double Y
         {
             get { return _Y; }
             set { _Y = value; }
         }
 
-        private float _T;
+        private double _T;
 
-        public float T
+        public double T
         {
             get { return _T; }
             set { _T = value; }
@@ -53,19 +53,19 @@ namespace MES_App.BasicStruct
 
 
         //TODO zmienić to na dane z pliku 
-        public static List<Node> BuildNodes(float nh, float nb, float H, float B, float initailTemperature)
+        public static List<Node> BuildNodes(double nh, double nb, double H, double B, double initailTemperature)
         {
             List<Node> nodes = new List<Node>();
 
             var cos = 0.1 / (4 - 1);
 
-            float deltax = H / (nh - 1);
-            float deltay = B / (nh - 1);
+            double deltax = H / (nh - 1);
+            double deltay = B / (nh - 1);
             
 
-            for (float i = 0f; i < B; i += deltay)
+            for (double i = 0f; i <= B; i += deltay)
             {
-                for (float j = 0; j < H; j += deltax)
+                for (double j = 0; j <= H; j += deltax)
                 {
                     if (i == 0 || j == 0)
                     {

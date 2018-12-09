@@ -10,7 +10,7 @@ namespace MES_App.Providers
 {
     class VectorPProvider
     {
-        public VectorPProvider(UniversalPoint point, float detJ, float t0, float alfa, float ds)
+        public VectorPProvider(UniversalPoint point, double detJ, double t0, double alfa, double ds)
         {
             _Result[0] = 1 / 4 * (1 - point.X) * (1 - point.Y) * t0 * detJ * alfa * ds / 2;
             _Result[1] = 1 / 4 * (1 + point.X) * (1 - point.Y) * t0 * detJ * alfa * ds / 2;
@@ -19,9 +19,9 @@ namespace MES_App.Providers
             
         }
 
-        private float[] _Result = new float[4];
+        private double[] _Result = new double[4];
 
-        public float[] Result
+        public double[] Result
         {
             get { return _Result; }
             set { _Result = value; }

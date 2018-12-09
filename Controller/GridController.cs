@@ -21,8 +21,8 @@ namespace MES_App.Controller
                                         startUpData.H,
                                         startUpData.B,
                                         startUpData.InitialTemperature);
-            _Elements = Element.BuildElements(startUpData.H,
-                                                    startUpData.B,
+            _Elements = Element.BuildElements(startUpData.N_H,
+                                                    startUpData.N_B,
                                                     startUpData.Conductivity);
         }
     }

@@ -10,7 +10,7 @@ namespace MES_App.Providers
 {
     class BorderContitionMatrixHProvider
     {
-        public BorderContitionMatrixHProvider(UniversalPoint[] points, float detJ, float alfa)
+        public BorderContitionMatrixHProvider(UniversalPoint[] points, double detJ, double alfa)
         {
             CountN(points);
 
@@ -28,11 +28,11 @@ namespace MES_App.Providers
 
         }
 
-        private float[,] N = new float[2, 4];
+        private double[,] N = new double[2, 4];
 
-        private float[,] _Result = new float[4, 4];
+        private double[,] _Result = new double[4, 4];
 
-        public float[,] Result
+        public double[,] Result
         {
             get { return _Result; }
             set { _Result = value; }

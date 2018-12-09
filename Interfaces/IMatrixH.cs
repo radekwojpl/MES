@@ -9,10 +9,10 @@ namespace MES_App.Interfaces
 {
     interface IMatrixH
     {
-        float[,] dNx_dx { get; set; }
-        float[,] dNx_dy { get; set; }
-        float[,] MatrixH { get; set; }
-        float K { get; set; }
+        double[,] dNx_dx { get; set; }
+        double[,] dNx_dy { get; set; }
+        double[,] MatrixH { get; set; }
+        double K { get; set; }
         IUniversalElement  UniversalElement { get; set; }
 
     }

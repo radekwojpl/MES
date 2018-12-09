@@ -10,44 +10,44 @@ namespace MES_App.Providers
     class MatrixHProvider : IMatrixH
     {
 
-        private float[,] _dNx_dx = new float[4,4];
-        public float[,] dNx_dx { get => _dNx_dx; set => _dNx_dx=value; }
+        private double[,] _dNx_dx = new double[4,4];
+        public double[,] dNx_dx { get => _dNx_dx; set => _dNx_dx=value; }
 
-        private float[,] _dNx_dy = new float[4,4];
-        public float[,] dNx_dy { get => _dNx_dy;  set => _dNx_dy = value; }
+        private double[,] _dNx_dy = new double[4,4];
+        public double[,] dNx_dy { get => _dNx_dy;  set => _dNx_dy = value; }
 
-        private float _K;
-        public float K { get => _K; set => _K = value; }
+        private double _K;
+        public double K { get => _K; set => _K = value; }
 
         private IUniversalElement _UniversalElement;
         public IUniversalElement UniversalElement { get => _UniversalElement; set => _UniversalElement = value; }
 
-        private float[] _detJacobian;
+        private double[] _detJacobian;
 
-        public float[] DetJacobian
+        public double[] DetJacobian
         {
             get { return _detJacobian; }
             private set { _detJacobian = value; }
         }
 
-        private float[,] _jacobian;
+        private double[,] _jacobian;
 
-        public float[,] Javobian
+        public double[,] Javobian
         {
             get { return _jacobian; }
            private set { _jacobian = value; }
         }
 
-        private float[,] _MatrixH = new float [4,4];
+        private double[,] _MatrixH = new double [4,4];
 
-        public float[,] MatrixH
+        public double[,] MatrixH
         {
             get { return _MatrixH; }
             set { _MatrixH = value; }
         }
 
 
-        public MatrixHProvider(IUniversalElement universalElement, float[,] jacobian, float[] detJacobian, float k)
+        public MatrixHProvider(IUniversalElement universalElement, double[,] jacobian, double[] detJacobian, double k)
         {
             _jacobian = jacobian;
             _detJacobian = detJacobian;
@@ -59,9 +59,9 @@ namespace MES_App.Providers
             _MatrixH = BuildMatrixH(_dNx_dx, _dNx_dy, _detJacobian, _K);
         }
 
-        private float[,] BuildNx_X(float[,] dn_dksi, float[,] dn_deta, float[,] jacobian)
+        private double[,] BuildNx_X(double[,] dn_dksi, double[,] dn_deta, double[,] jacobian)
         {
-            float[,] result = new float[4, 4];
+            double[,] result = new double[4, 4];
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
@@ -77,9 +77,9 @@ namespace MES_App.Providers
             return result;
         }
 
-        private float[,] BuildNx_Y(float[,] dn_dksi, float[,] dn_deta, float[,] jacobian)
+        private double[,] BuildNx_Y(double[,] dn_dksi, double[,] dn_deta, double[,] jacobian)
         {
-            float[,] result = new float[4, 4];
+            double[,] result = new double[4, 4];
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
@@ -95,14 +95,14 @@ namespace MES_App.Providers
             return result;
         }
 
-        private float[,] BuildMatrixH(float[,] dNx_X, float[,] dNx_Y, float[] detJ, float K)
+        private double[,] BuildMatrixH(double[,] dNx_X, double[,] dNx_Y, double[] detJ, double K)
         {
 
-            List<float[,]> dN_dx_dN_dx_T = new List<float[,]>();
+            List<double[,]> dN_dx_dN_dx_T = new List<double[,]>();
 
             for (int z = 0; z < 4; z++)
             {
-                float[,] Pcx = new float[4, 4];
+                double[,] Pcx = new double[4, 4];
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
@@ -116,11 +116,11 @@ namespace MES_App.Providers
             }
 
 
-            List<float[,]> dN_dy_dN_dy_T = new List<float[,]>();
+            List<double[,]> dN_dy_dN_dy_T = new List<double[,]>();
 
             for (int z = 0; z < 4; z++)
             {
-                float[,] Pcy = new float[4, 4];
+                double[,] Pcy = new double[4, 4];
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
@@ -132,11 +132,11 @@ namespace MES_App.Providers
                 dN_dy_dN_dy_T.Add(Pcy);
             }
 
-            List<float[,]> tmp = new List<float[,]>();
+            List<double[,]> tmp = new List<double[,]>();
 
             for (int z = 0; z < 4; z++)
             {
-                float[,] Pcp = new float[4, 4];
+                double[,] Pcp = new double[4, 4];
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
@@ -151,7 +151,7 @@ namespace MES_App.Providers
 
             }
 
-            float[,] result = new float[4, 4];
+            double[,] result = new double[4, 4];
 
             for (int i = 0; i < 4; i++)
             {

@@ -11,9 +11,9 @@ namespace MES_App.Interfaces
     {
        
         UniversalPoint[] PointsOfIntegration { get; set; }
-        float[,] dN_dETA { get; set; }
-        float[,] dN_dKSI { get; set; }
-        float[,] N { get; set; }
+        double[,] dN_dETA { get; set; }
+        double[,] dN_dKSI { get; set; }
+        double[,] N { get; set; }
      
 
     }

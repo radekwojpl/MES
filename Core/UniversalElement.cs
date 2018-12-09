@@ -29,25 +29,25 @@ namespace MES_App.Core
         }
 
 
-        private float[,] _dN_dETA;
+        private double[,] _dN_dETA;
 
-        public float[,] dN_dETA
+        public double[,] dN_dETA
         {
             get { return _dN_dETA; }
             set { _dN_dETA = value; }
         }
 
-        private float[,] _dN_dKSI;
+        private double[,] _dN_dKSI;
 
-        public float[,] dN_dKSI
+        public double[,] dN_dKSI
         {
             get { return _dN_dKSI; }
             set { _dN_dKSI = value; }
         }
 
-        private float[,] _N;
+        private double[,] _N;
 
-        public float[,] N
+        public double[,] N
         {
             get { return _N; }
             set { _N = value; }
@@ -56,7 +56,7 @@ namespace MES_App.Core
 
         public void SetUp()
         {
-            var tmp = 1 / (float)Math.Sqrt(3);
+            var tmp = 1 / (double)Math.Sqrt(3);
             _PointsOfIntegration[0] = new UniversalPoint(-tmp, -tmp);
             _PointsOfIntegration[1] = new UniversalPoint(tmp, -tmp);
             _PointsOfIntegration[2] = new UniversalPoint(tmp, tmp);
@@ -89,10 +89,10 @@ namespace MES_App.Core
             CountValueForPointOfIntegrationForFunctionShape(_PointsOfIntegration, out _N, rows, columns);
         }
 
-        private void CountFunctionShapeDerative_DN_Ksi(UniversalPoint[] point, out float[,] result, int rows, int columns)
+        private void CountFunctionShapeDerative_DN_Ksi(UniversalPoint[] point, out double[,] result, int rows, int columns)
         {
-            float tmp;
-            result = new float[rows, columns];
+            double tmp;
+            result = new double[rows, columns];
 
             for (int i = 0; i < point.Length; i++)
             {
@@ -123,10 +123,10 @@ namespace MES_App.Core
 
         }
 
-        private void CountFunctionShapeDerative_DN_ETA(UniversalPoint[] point, out float[,] result, int rows, int columns)
+        private void CountFunctionShapeDerative_DN_ETA(UniversalPoint[] point, out double[,] result, int rows, int columns)
         {
-            float tmp;
-            result = new float[rows, columns];
+            double tmp;
+            result = new double[rows, columns];
 
             for (int i = 0; i < point.Length; i++)
             {
@@ -157,10 +157,10 @@ namespace MES_App.Core
 
         }
 
-        private void CountValueForPointOfIntegrationForFunctionShape(UniversalPoint[] point, out float[,] result, int rows, int columns)
+        private void CountValueForPointOfIntegrationForFunctionShape(UniversalPoint[] point, out double[,] result, int rows, int columns)
         {
-            float tmp;
-            result = new float[rows, columns];
+            double tmp;
+            result = new double[rows, columns];
 
             for (int i = 0; i < point.Length; i++)
             {
