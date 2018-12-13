@@ -22,10 +22,29 @@ namespace MES_App
             GridController GridEngine = new GridController(startUPData);
 
 
-            for (double i = 0; i < startUPData.SimulationTime; i+= startUPData.SimulationStepTime)
-            {
+            //for (double i = 0; i < startUPData.SimulationTime; i+= startUPData.SimulationStepTime)
+            //{
 
-            }
+            //}
+
+            //var tmp = 1 / (double)Math.Sqrt(3);
+            //UniversalPoint [] universalPoint = new UniversalPoint[2];
+            //universalPoint[0] = new UniversalPoint(-tmp, -1);
+
+
+
+            //universalPoint[1] = new UniversalPoint(tmp, -1);
+
+
+
+            //BorderContitionMatrixHProvider vs = new BorderContitionMatrixHProvider(universalPoint, 5, 25);
+            var tmp = 1 / (double)Math.Sqrt(3);
+           
+            UniversalPoint universalPoint = new UniversalPoint(-1, -tmp);
+            VectorPProvider vs = new VectorPProvider(universalPoint, 0.01666666, 1200.0, 300.0);
+
+
+            Console.WriteLine("Test");
 
             Console.ReadKey();
 

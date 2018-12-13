@@ -10,13 +10,13 @@ namespace MES_App.Providers
 {
     class VectorPProvider
     {
-        public VectorPProvider(UniversalPoint point, double detJ, double t0, double alfa, double ds)
+        public VectorPProvider(UniversalPoint point, double detJ, double t0, double alfa)
         {
-            _Result[0] = 1 / 4 * (1 - point.X) * (1 - point.Y) * t0 * detJ * alfa * ds / 2;
-            _Result[1] = 1 / 4 * (1 + point.X) * (1 - point.Y) * t0 * detJ * alfa * ds / 2;
-            _Result[2] = 1 / 4 * (1 + point.X) * (1 + point.Y) * t0 * detJ * alfa * ds / 2;
-            _Result[3] = 1 / 4 * (1 - point.X) * (1 + point.Y) * t0 * detJ * alfa * ds / 2;
-            
+            Result[0] = 0.25 * (1 - point.X) * (1 - point.Y) * t0 * detJ * alfa;
+            Result[1] = 0.25 * (1 + point.X) * (1 - point.Y) * t0 * detJ * alfa;
+            Result[2] = 0.25 * (1 + point.X) * (1 + point.Y) * t0 * detJ * alfa;
+            Result[3] = 0.25 * (1 - point.X) * (1 + point.Y) * t0 * detJ * alfa;
+
         }
 
         private double[] _Result = new double[4];

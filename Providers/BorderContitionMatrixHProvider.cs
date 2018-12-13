@@ -10,25 +10,9 @@ namespace MES_App.Providers
 {
     class BorderContitionMatrixHProvider
     {
-        public BorderContitionMatrixHProvider(UniversalPoint[] points, double detJ, double alfa)
-        {
-            CountN(points);
 
-            for (int i = 0; i < 2; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    for (int z = 0; z < 4; z++)
-                    {
-                        _Result[j,z] += N[i, j] * N[i,z]*alfa * detJ;
-                    }
-                    
-                }
-            }
-
-        }
-
-        private double[,] N = new double[2, 4];
+        private double[] N1 = new double[4];
+        private double[] N2 = new double[4];
 
         private double[,] _Result = new double[4, 4];
 
@@ -38,23 +22,45 @@ namespace MES_App.Providers
             set { _Result = value; }
         }
 
-        private void CountN(UniversalPoint[] points)
+        public BorderContitionMatrixHProvider(UniversalPoint[] points, double detJ, double alfa)
         {
-            for (int i = 0; i < 2; i++)
-            {
+            CountN(points);
 
-                for (int j = 0; j < 4; j++)
+            
+                for (int i = 0; i < 4; i++)
                 {
-                    N[i, j] = 1 / 4 * (1 - points[i].X) * (1 - points[i].Y);
-                    N[i, j] = 1 / 4 * (1 + points[i].X) * (1 - points[i].Y);
-                    N[i, j] = 1 / 4 * (1 + points[i].X) * (1 + points[i].Y);
-                    N[i, j] = 1 / 4 * (1 - points[i].X) * (1 + points[i].Y);
+                    for (int j = 0; j < 4; j++)
+                    {
+                        _Result[i,j] += N1[i] * N1[j] * alfa * detJ;
+                         _Result[i, j] += N2[i] * N2[j] * alfa * detJ;
 
                 }
 
-            }
+                }
+            
+
         }
 
 
+        private void CountN(UniversalPoint[] points)
+        {
+
+
+
+            N1[0] = 0.25 * (1.0 - points[0].X) * (1.0 - points[0].Y);
+            N1[1] = 0.25 * (1.0 + points[0].X) * (1.0 - points[0].Y);
+            N1[2] = 0.25 * (1.0 + points[0].X) * (1.0 + points[0].Y);
+            N1[3] = 0.25 * (1.0 - points[0].X) * (1.0 + points[0].Y);
+
+            N2[0] = 0.25 * (1.0 - points[1].X) * (1.0 - points[1].Y);
+            N2[1] = 0.25 * (1.0 + points[1].X) * (1.0 - points[1].Y);
+            N2[2] = 0.25 * (1.0 + points[1].X) * (1.0 + points[1].Y);
+            N2[3] = 0.25 * (1.0 - points[1].X) * (1.0 + points[1].Y);
+
+
+        }
     }
+
+
 }
+
