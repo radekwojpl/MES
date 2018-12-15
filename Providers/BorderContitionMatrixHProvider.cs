@@ -24,25 +24,25 @@ namespace MES_App.Providers
 
         public BorderContitionMatrixHProvider(UniversalPoint[] points, double detJ, double alfa)
         {
-            CountN(points);
+            CountN(points, alfa);
 
-            
-                for (int i = 0; i < 4; i++)
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
                 {
-                    for (int j = 0; j < 4; j++)
-                    {
-                        _Result[i,j] += N1[i] * N1[j] * alfa * detJ;
-                         _Result[i, j] += N2[i] * N2[j] * alfa * detJ;
+                    _Result[i, j] += N1[i] * N1[j] * alfa * detJ/2;
+                    _Result[i, j] += N2[i] * N2[j] * alfa * detJ/2;
 
                 }
 
-                }
-            
+            }
+
 
         }
 
 
-        private void CountN(UniversalPoint[] points)
+        private void CountN(UniversalPoint[] points, double alfa)
         {
 
 

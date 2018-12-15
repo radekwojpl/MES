@@ -18,31 +18,79 @@ namespace MES_App
 
         static void Main(string[] args)
         {
-            StartUpData startUPData = new StartUpData(100, 500, 50, 1200, 300, 0.1, 0.1, 4, 4, 700, 25, 780);
+            StartUpData startUPData = new StartUpData(100, 500, 50, 1200, 300, 0.1, 0.1, 4, 4, 700, 25, 7800);
             GridController GridEngine = new GridController(startUPData);
+            Grid grid = GridEngine.Grid;
+            IUniversalElement universalElement = new UniversalElement();
+            var GlobalH = new double[16, 16];
+
+            var localid = new int[4];
+            localid[0] = 1;
+            localid[1] = 2;
+            localid[2] = 3;
+            localid[3] = 4;
+
+            int z = 0;
+            for (double i = 0; i < startUPData.SimulationTime; i += startUPData.SimulationStepTime)
+            {
+                foreach (var item in grid.Elements)
+                {
+                    var nodes = grid.GetNodesByElement(grid.GetElementByID(z));
+
+                    JacobianProvider jacobianProvider = new JacobianProvider(nodes,
+                                                                                universalElement);
+
+                    MatrixHProvider matrixHProvider = new MatrixHProvider(universalElement,
+                                                                            jacobianProvider.ReverseJacobian,
+                                                                                jacobianProvider.DejJacobian,
+                                                                                    startUPData.Conductivity);
+                    double[] Ids = new double[4];
+                    Ids[0] = item.NodesIDList[0];
+                    Ids[1] = item.NodesIDList[1];
+                    Ids[2] = item.NodesIDList[2];
+                    Ids[3] = item.NodesIDList[3];
+
+                    LoclaToGlobal(localid, Ids, matrixHProvider.MatrixH,  GlobalH);
 
 
-            //for (double i = 0; i < startUPData.SimulationTime; i+= startUPData.SimulationStepTime)
-            //{
-
-            //}
-
-            //var tmp = 1 / (double)Math.Sqrt(3);
-            //UniversalPoint [] universalPoint = new UniversalPoint[2];
-            //universalPoint[0] = new UniversalPoint(-tmp, -1);
+                   
 
 
 
-            //universalPoint[1] = new UniversalPoint(tmp, -1);
+                    MatrixCProvider matrixCProvider = new MatrixCProvider(universalElement,
+                                                                          startUPData.SpecificHeat,
+                                                                            startUPData.Density,
+                                                                                jacobianProvider.DejJacobian);
+
+                    for (int j = 0; j < universalElement.SurfacePointsOfIntegration.Length; j += 2)
+                    {
+                        var surfacePoint = new UniversalPoint[2];
+                        surfacePoint[0] = universalElement.SurfacePointsOfIntegration[j];
+                        surfacePoint[1] = universalElement.SurfacePointsOfIntegration[j + 1];
+                        BorderContitionMatrixHProvider borderContitionMatrixHProvider = new BorderContitionMatrixHProvider(surfacePoint,
+                                                                                                                           0.0333333,
+                                                                                                                          startUPData.Alfa);
+                     
+                        //Console.WriteLine(z+  "---------------------" );
+                    }
+
+
+                    z++;
+                }
+                PrintMatrix(GlobalH, 16, 16);
+                z = 0;
+
+            }
 
 
 
-            //BorderContitionMatrixHProvider vs = new BorderContitionMatrixHProvider(universalPoint, 5, 25);
-            var tmp = 1 / (double)Math.Sqrt(3);
+
+            
            
-            UniversalPoint universalPoint = new UniversalPoint(-1, -tmp);
-            VectorPProvider vs = new VectorPProvider(universalPoint, 0.01666666, 1200.0, 300.0);
 
+            
+
+ 
 
             Console.WriteLine("Test");
 
@@ -52,58 +100,36 @@ namespace MES_App
         }
         #region  BuildJacobian cos tam
 
-        public static void BuildJacobiaMatrix(out double[,] result, List<Node> points, IUniversalElement universalElement)
-        {
-            result = new double[4, 4];
-
-            for (int i = 0; i < 4; i++)
-            {
-                result[0, i] = universalElement.dN_dKSI[i, 0] * points[0].X + universalElement.dN_dKSI[i, 1] * points[1].X + universalElement.dN_dKSI[i, 2] * points[2].X + universalElement.dN_dKSI[i, 3] * points[3].X;
-                result[1, i] = universalElement.dN_dKSI[i, 0] * points[0].Y + universalElement.dN_dKSI[i, 1] * points[1].Y + universalElement.dN_dKSI[i, 2] * points[2].Y + universalElement.dN_dKSI[i, 3] * points[3].Y;
-                result[2, i] = universalElement.dN_dETA[i, 0] * points[0].X + universalElement.dN_dETA[i, 1] * points[1].X + universalElement.dN_dETA[i, 2] * points[2].X + universalElement.dN_dETA[i, 3] * points[3].X;
-                result[3, i] = universalElement.dN_dETA[i, 0] * points[0].Y + universalElement.dN_dETA[i, 1] * points[1].Y + universalElement.dN_dETA[i, 2] * points[2].Y + universalElement.dN_dETA[i, 3] * points[3].Y;
-
-            }
-
-        }
-
-        public static void BuildDetFromJacobianMatrix(out double[] result, double[,] jacobianMatrix)
-        {
-            result = new double[4];
-            for (int i = 0; i < 4; i++)
-            {
-
-                result[i] = jacobianMatrix[0, i] * jacobianMatrix[3, i] - jacobianMatrix[1, i] * jacobianMatrix[2, i];
-            }
-        }
-
-        public static void ReversJacobian(double[,] jacobian, double[] detJacobian, out double[,] result, int row, int column)
-        {
-            result = new double[row, column];
-
-            for (int i = 0; i < 4; i++)
-            {
-           
-                for (int j = 0; j < 4; j++)
-                {
-                    result[j, i] = jacobian[3 - j, i] / detJacobian[i];
-                }
-            }
-
-
-        }
 
         #endregion
 
-        public static void PrintMatrix(double[,] cos)
+        public static void PrintMatrix(double[,] cos , int row , int col)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < row; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < col; j++)
                 {
                     Console.Write(string.Format("{0} ", cos[i, j]));
                 }
                 Console.Write(Environment.NewLine + Environment.NewLine);
+            }
+
+        }
+
+        public static void LoclaToGlobal(int[] LocalIds, double[] GlobalIds, double[,] localTab,  double[,] gloabalTab)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    var localx = LocalIds[j];
+                    int globalx = (int)GlobalIds[localx - 1];
+
+                    var localy = LocalIds[i];
+                    int globaly = (int)GlobalIds[localy - 1];
+
+                    gloabalTab[globalx - 1, globaly - 1] += localTab[i, j];
+                }
             }
 
         }
