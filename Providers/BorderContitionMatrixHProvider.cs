@@ -26,18 +26,18 @@ namespace MES_App.Providers
         {
             CountN(points);
 
-            
-                for (int i = 0; i < 4; i++)
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
                 {
-                    for (int j = 0; j < 4; j++)
-                    {
-                        _Result[i,j] += N1[i] * N1[j] * alfa * detJ;
-                         _Result[i, j] += N2[i] * N2[j] * alfa * detJ;
+                    _Result[i, j] += N1[i] * N1[j] * alfa * detJ;
+                    _Result[i, j] += N2[i] * N2[j] * alfa * detJ;
 
                 }
 
-                }
-            
+            }
+
 
         }
 
