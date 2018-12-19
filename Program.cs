@@ -21,8 +21,12 @@ namespace MES_App
             StartUpData startUPData = new StartUpData(100, 500, 50, 1200, 300, 0.1, 0.1, 4, 4, 700, 25, 7800);
             GridController GridEngine = new GridController(startUPData);
             Grid grid = GridEngine.Grid;
+            int f = 0;
+         
             IUniversalElement universalElement = new UniversalElement();
             var GlobalH = new double[16, 16];
+            var GlobalC = new double[16, 16];
+            var GlobalP = new double[16];
 
             var localid = new int[4];
             localid[0] = 1;
@@ -36,6 +40,15 @@ namespace MES_App
                 foreach (var item in grid.Elements)
                 {
                     var nodes = grid.GetNodesByElement(grid.GetElementByID(z));
+                    List<bool> hbcPlaces;
+
+                    HBCMatrixPlaces(out hbcPlaces, nodes);
+
+                    for (int k = 0; k < 4; k++)
+                    {
+                        Console.Write(hbcPlaces[k]);
+                    }
+                    Console.WriteLine("adsadasd12132133[123[123[");
 
                     JacobianProvider jacobianProvider = new JacobianProvider(nodes,
                                                                                 universalElement);
@@ -44,17 +57,14 @@ namespace MES_App
                                                                             jacobianProvider.ReverseJacobian,
                                                                                 jacobianProvider.DejJacobian,
                                                                                     startUPData.Conductivity);
+
                     double[] Ids = new double[4];
                     Ids[0] = item.NodesIDList[0];
                     Ids[1] = item.NodesIDList[1];
                     Ids[2] = item.NodesIDList[2];
                     Ids[3] = item.NodesIDList[3];
 
-                    LoclaToGlobal(localid, Ids, matrixHProvider.MatrixH,  GlobalH);
-
-
-                   
-
+                    Local2DMarixToGlobal(localid, Ids, matrixHProvider.MatrixH, GlobalH);
 
 
                     MatrixCProvider matrixCProvider = new MatrixCProvider(universalElement,
@@ -62,22 +72,57 @@ namespace MES_App
                                                                             startUPData.Density,
                                                                                 jacobianProvider.DejJacobian);
 
+                    Local2DMarixToGlobal(localid, Ids, matrixCProvider.MatrixC, GlobalC);
+
+
+                    int test = 0;
                     for (int j = 0; j < universalElement.SurfacePointsOfIntegration.Length; j += 2)
                     {
-                        var surfacePoint = new UniversalPoint[2];
-                        surfacePoint[0] = universalElement.SurfacePointsOfIntegration[j];
-                        surfacePoint[1] = universalElement.SurfacePointsOfIntegration[j + 1];
-                        BorderContitionMatrixHProvider borderContitionMatrixHProvider = new BorderContitionMatrixHProvider(surfacePoint,
-                                                                                                                           0.0333333,
-                                                                                                                          startUPData.Alfa);
-                     
-                        //Console.WriteLine(z+  "---------------------" );
+                        if (hbcPlaces[j / 2] == true)
+                        {
+
+                            var surfacePoint = new UniversalPoint[2];
+                            surfacePoint[0] = universalElement.SurfacePointsOfIntegration[j];
+                            surfacePoint[1] = universalElement.SurfacePointsOfIntegration[j + 1];
+                            BorderContitionMatrixHProvider borderContitionMatrixHProvider = new BorderContitionMatrixHProvider(surfacePoint,
+                                                                                                                               0.0333333,
+                                                                                                                              startUPData.Alfa);
+
+
+                            var tmp = new VectorPProvider(surfacePoint[0], 0.033333, 1200, 300);
+                            Local1DMatrixToGlobal(localid, Ids, tmp.Result, GlobalP);
+
+
+                            var tmp1 = new VectorPProvider(surfacePoint[1], 0.03333, 1200, 300);
+                            Local1DMatrixToGlobal(localid, Ids, tmp1.Result, GlobalP);
+
+                            Local2DMarixToGlobal(localid, Ids, borderContitionMatrixHProvider.Result, GlobalH);
+                        }
+
                     }
+
+                    
+
 
 
                     z++;
                 }
-                PrintMatrix(GlobalH, 16, 16);
+
+                //Print2DMatrix(GlobalH, 16, 16);
+                //Console.WriteLine("--------------------------------------------------");
+
+                //Console.WriteLine("--------------------------------------------------");
+                //Print2DMatrix(GlobalC, 16, 16);
+
+                //Console.WriteLine("--------------------------------------------------");
+
+                Print1DMatrix(GlobalP, 16);
+                
+
+
+                Console.WriteLine("--------------------------------------");
+
+
                 z = 0;
 
             }
@@ -85,12 +130,12 @@ namespace MES_App
 
 
 
-            
-           
 
-            
 
- 
+
+
+
+
 
             Console.WriteLine("Test");
 
@@ -103,7 +148,7 @@ namespace MES_App
 
         #endregion
 
-        public static void PrintMatrix(double[,] cos , int row , int col)
+        public static void Print2DMatrix(double[,] cos, int row, int col)
         {
             for (int i = 0; i < row; i++)
             {
@@ -116,7 +161,15 @@ namespace MES_App
 
         }
 
-        public static void LoclaToGlobal(int[] LocalIds, double[] GlobalIds, double[,] localTab,  double[,] gloabalTab)
+        public static void Print1DMatrix(double[] cos, int row)
+        {
+            for (int i = 0; i < row; i++)
+            {
+                Console.Write(cos[i]+"    ");
+            }
+        }
+
+        public static void Local2DMarixToGlobal(int[] LocalIds, double[] GlobalIds, double[,] localTab, double[,] gloabalTab)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -134,5 +187,68 @@ namespace MES_App
 
         }
 
+        public static void Local1DMatrixToGlobal(int[] LocalIds, double[] GlobalIds, double[] loclaTab, double [] gloabalTab)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                var localx = LocalIds[i];
+                int globalx = (int)GlobalIds[localx - 1];
+
+                gloabalTab[globalx - 1] += loclaTab[i];
+            }
+        }
+
+        public static void HBCMatrixPlaces(out List<bool> places, List<Node> nodes)
+        {
+            places = new List<bool>();
+            for (int i = 0; i < 4; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        if (nodes[0].BC && nodes[1].BC)
+                        {
+                            places.Add(true);
+                        }
+                        else
+                        {
+                            places.Add(false);
+                        }
+                        break;
+                    case 1:
+                        if (nodes[1].BC && nodes[2].BC)
+                        {
+                            places.Add(true);
+                        }
+                        else
+                        {
+                            places.Add(false);
+                        }
+                        break;
+                    case 2:
+                        if (nodes[2].BC && nodes[3].BC)
+                        {
+                            places.Add(true);
+                        }
+                        else
+                        {
+                            places.Add(false);
+                        }
+                        break;
+                    case 3:
+                        if (nodes[3].BC && nodes[0].BC)
+                        {
+                            places.Add(true);
+                        }
+                        else
+                        {
+                            places.Add(false);
+                        }
+                        break;
+                }
+            }
+
+
+        }
     }
 }
