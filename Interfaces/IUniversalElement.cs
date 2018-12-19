@@ -14,7 +14,7 @@ namespace MES_App.Interfaces
         double[,] dN_dETA { get; set; }
         double[,] dN_dKSI { get; set; }
         double[,] N { get; set; }
-     
+        UniversalPoint[] SurfacePointsOfIntegration { get; set; }
 
     }
 }

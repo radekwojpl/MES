@@ -31,8 +31,13 @@ namespace MES_App.Providers
             {
                 for (int j = 0; j < 4; j++)
                 {
+<<<<<<< HEAD
+                    _Result[i, j] += N1[i] * N1[j] * alfa * detJ;
+                    _Result[i, j] += N2[i] * N2[j] * alfa * detJ;
+=======
                     _Result[i, j] += N1[i] * N1[j] * alfa * detJ/2;
                     _Result[i, j] += N2[i] * N2[j] * alfa * detJ/2;
+>>>>>>> origin/refactor
 
                 }
 

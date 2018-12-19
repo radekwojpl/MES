@@ -14,6 +14,15 @@ namespace MES_App.Controller
         private List<Element> _Elements;
         private StartUpData _StartUpData;
 
+        private Grid _Grid;
+
+        public Grid Grid
+        {
+            get { return _Grid; }
+            set { _Grid = value; }
+        }
+
+
         public GridController(StartUpData startUpData)
         {
             _Nodes = Node.BuildNodes(startUpData.N_H,
@@ -24,6 +33,8 @@ namespace MES_App.Controller
             _Elements = Element.BuildElements(startUpData.N_H,
                                                     startUpData.N_B,
                                                     startUpData.Conductivity);
+
+            _Grid = new Grid(_Nodes, _Elements);
         }
     }
 }
