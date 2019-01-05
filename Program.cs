@@ -22,7 +22,10 @@ namespace MES_App
             GridController GridEngine = new GridController(startUPData);
             Grid grid = GridEngine.Grid;
             int f = 0;
-         
+
+            MatrixHProvider matrixHProvider;
+            MatrixCProvider matrixCProvider;
+
             IUniversalElement universalElement = new UniversalElement();
             var GlobalH = new double[16, 16];
             var GlobalC = new double[16, 16];
@@ -53,7 +56,7 @@ namespace MES_App
                     JacobianProvider jacobianProvider = new JacobianProvider(nodes,
                                                                                 universalElement);
 
-                    MatrixHProvider matrixHProvider = new MatrixHProvider(universalElement,
+                     matrixHProvider = new MatrixHProvider(universalElement,
                                                                             jacobianProvider.ReverseJacobian,
                                                                                 jacobianProvider.DejJacobian,
                                                                                     startUPData.Conductivity);
@@ -67,7 +70,7 @@ namespace MES_App
                     Local2DMarixToGlobal(localid, Ids, matrixHProvider.MatrixH, GlobalH);
 
 
-                    MatrixCProvider matrixCProvider = new MatrixCProvider(universalElement,
+                    matrixCProvider = new MatrixCProvider(universalElement,
                                                                           startUPData.SpecificHeat,
                                                                             startUPData.Density,
                                                                                 jacobianProvider.DejJacobian);
@@ -75,7 +78,7 @@ namespace MES_App
                     Local2DMarixToGlobal(localid, Ids, matrixCProvider.MatrixC, GlobalC);
 
 
-                    int test = 0;
+                   
                     for (int j = 0; j < universalElement.SurfacePointsOfIntegration.Length; j += 2)
                     {
                         if (hbcPlaces[j / 2] == true)
@@ -107,18 +110,13 @@ namespace MES_App
 
                     z++;
                 }
-
-                //Print2DMatrix(GlobalH, 16, 16);
-                //Console.WriteLine("--------------------------------------------------");
-
-                //Console.WriteLine("--------------------------------------------------");
-                //Print2DMatrix(GlobalC, 16, 16);
-
-                //Console.WriteLine("--------------------------------------------------");
-
-                Print1DMatrix(GlobalP, 16);
+                CountGlobalMatrixH(startUPData.SimulationStepTime, GlobalC, ref GlobalH);
                 
 
+                Print1DMatrix(GlobalP, 16);
+
+
+               
 
                 Console.WriteLine("--------------------------------------");
 
@@ -144,7 +142,29 @@ namespace MES_App
 
         }
         #region  BuildJacobian cos tam
+        public static void CountGlobalMatrixH(double dt, double[,] MatrixC, ref double[,] MatrixH)
+        {
+            var tmpMatrixC = MatrixC;
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    MatrixH[i, j] += tmpMatrixC[i, j]/dt;
+                }
+            }
+        }
 
+        public static void CountGlobalVectorP(double dt, double[,] MatrixC, double[] TempMatrix )
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    MatrixC[i, j] /= dt;
+                    MatrixC[i, j] *= TempMatrix[i];
+                }
+            }
+        }
 
         #endregion
 

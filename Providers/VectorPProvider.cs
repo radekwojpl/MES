@@ -12,10 +12,10 @@ namespace MES_App.Providers
     {
         public VectorPProvider(UniversalPoint point, double detJ, double t0, double alfa)
         {
-            Result[0] = -0.25 * (1 - point.X) * (1 - point.Y) * t0 * detJ/2 * alfa;
-            Result[1] = -0.25 * (1 + point.X) * (1 - point.Y) * t0 * detJ/2 * alfa;
-            Result[2] = -0.25 * (1 + point.X) * (1 + point.Y) * t0 * detJ/2 * alfa;
-            Result[3] = -0.25 * (1 - point.X) * (1 + point.Y) * t0 * detJ/2 * alfa;
+            Result[0] = 0.25 * (1 - point.X) * (1 - point.Y) * t0 * detJ/2 * alfa;
+            Result[1] = 0.25 * (1 + point.X) * (1 - point.Y) * t0 * detJ/2 * alfa;
+            Result[2] = 0.25 * (1 + point.X) * (1 + point.Y) * t0 * detJ/2 * alfa;
+            Result[3] = 0.25 * (1 - point.X) * (1 + point.Y) * t0 * detJ/2 * alfa;
 
         }
 
