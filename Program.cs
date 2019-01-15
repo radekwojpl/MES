@@ -21,7 +21,7 @@ namespace MES_App
             StartUpData startUPData = new StartUpData(100, 500, 50, 1200, 300, 0.1, 0.1, 4, 4, 700, 25, 7800);
             GridController GridEngine = new GridController(startUPData);
             Grid grid = GridEngine.Grid;
-            int f = 0;
+            
 
             MatrixHProvider matrixHProvider;
             MatrixCProvider matrixCProvider;
@@ -40,6 +40,9 @@ namespace MES_App
             int z = 0;
             for (double i = 0; i < startUPData.SimulationTime; i += startUPData.SimulationStepTime)
             {
+                GlobalH = new double[16, 16];
+                GlobalC = new double[16, 16];
+                GlobalP = new double[16];
                 foreach (var item in grid.Elements)
                 {
                     var nodes = grid.GetNodesByElement(grid.GetElementByID(z));
@@ -47,11 +50,6 @@ namespace MES_App
 
                     HBCMatrixPlaces(out hbcPlaces, nodes);
 
-                    for (int k = 0; k < 4; k++)
-                    {
-                        Console.Write(hbcPlaces[k]);
-                    }
-                    Console.WriteLine("adsadasd12132133[123[123[");
 
                     JacobianProvider jacobianProvider = new JacobianProvider(nodes,
                                                                                 universalElement);
@@ -92,11 +90,11 @@ namespace MES_App
                                                                                                                               startUPData.Alfa);
 
 
-                            var tmp = new VectorPProvider(surfacePoint[0], 0.033333, 1200, 300);
+                            var tmp = new VectorPProvider(surfacePoint[0], 0.033333333333, 1200, 300);
                             Local1DMatrixToGlobal(localid, Ids, tmp.Result, GlobalP);
 
 
-                            var tmp1 = new VectorPProvider(surfacePoint[1], 0.03333, 1200, 300);
+                            var tmp1 = new VectorPProvider(surfacePoint[1], 0.03333333333, 1200, 300);
                             Local1DMatrixToGlobal(localid, Ids, tmp1.Result, GlobalP);
 
                             Local2DMarixToGlobal(localid, Ids, borderContitionMatrixHProvider.Result, GlobalH);
@@ -111,11 +109,24 @@ namespace MES_App
                     z++;
                 }
                 CountGlobalMatrixH(startUPData.SimulationStepTime, GlobalC, ref GlobalH);
-                
+                CountGlobalVectorP(50, GlobalC,grid,ref GlobalP);
 
+                GauseProvider gauseProvider = new GauseProvider();
+                var tempresult = gauseProvider.GaussCalculation(16, GlobalH, GlobalP);
+                Console.WriteLine("GlobalH--------------------------");
+                Print2DMatrix(GlobalH, 16, 16);
+                Console.WriteLine("GlobalP--------------------------");
                 Print1DMatrix(GlobalP, 16);
+                Console.WriteLine();
+                Console.WriteLine("Temperatury--------------------");
+                Print1DMatrix(tempresult, 16);
 
+                for (int p = 0; p < 16; p++)
+                {
+                    grid.Nodes[p].T = tempresult[p];
+                }
 
+                
                
 
                 Console.WriteLine("--------------------------------------");
@@ -124,16 +135,6 @@ namespace MES_App
                 z = 0;
 
             }
-
-
-
-
-
-
-
-
-
-
 
             Console.WriteLine("Test");
 
@@ -154,14 +155,22 @@ namespace MES_App
             }
         }
 
-        public static void CountGlobalVectorP(double dt, double[,] MatrixC, double[] TempMatrix )
+        public static void CountGlobalVectorP(double dt, double[,] MatrixC, Grid grid, ref double[] VektorP )
         {
             for (int i = 0; i < 16; i++)
             {
                 for (int j = 0; j < 16; j++)
                 {
                     MatrixC[i, j] /= dt;
-                    MatrixC[i, j] *= TempMatrix[i];
+                    MatrixC[j, i] *= grid.Nodes[i].T;
+                }
+            }
+
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    VektorP[i] += MatrixC[i, j];
                 }
             }
         }
@@ -174,7 +183,7 @@ namespace MES_App
             {
                 for (int j = 0; j < col; j++)
                 {
-                    Console.Write(string.Format("{0} ", cos[i, j]));
+                    Console.Write(string.Format("{0:F3} ", cos[i, j]));
                 }
                 Console.Write(Environment.NewLine + Environment.NewLine);
             }
@@ -185,7 +194,7 @@ namespace MES_App
         {
             for (int i = 0; i < row; i++)
             {
-                Console.Write(cos[i]+"    ");
+                Console.Write(string.Format("{0:F3} ",cos[i]));
             }
         }
 

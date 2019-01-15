@@ -49,5 +49,22 @@ namespace MES_App.Core
             Density = density;
         }
 
+        public StartUpData(double[] vs
+                          )
+        {
+            InitialTemperature = vs[0];
+            SimulationTime = vs[1];
+            SimulationStepTime = vs[2];
+            AmbitientTemperature = vs[3];
+            Alfa = vs[4];
+            H = vs[5];
+            B = vs[6];
+            N_H = vs[7];
+            N_B = vs[8];
+            SpecificHeat = vs[9];
+            Conductivity = vs[10];
+            Density = vs[11];
+        }
+
     }
 }

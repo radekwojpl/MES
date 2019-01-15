@@ -57,8 +57,6 @@ namespace MES_App.BasicStruct
         {
             List<Node> nodes = new List<Node>();
 
-            var cos = 0.1 / (4 - 1);
-
             double deltax = H / (nh - 1);
             double deltay = B / (nh - 1);
             
