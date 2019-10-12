@@ -2,6 +2,7 @@
 using MES_App.Controller;
 using MES_App.Core;
 using MES_App.DataLoaders.File;
+using MES_App.Extension;
 using MES_App.Interfaces;
 using MES_App.Providers;
 using System;
@@ -114,13 +115,12 @@ namespace MES_App
                 GauseProvider gauseProvider = new GauseProvider();
                 var tempresult = gauseProvider.GaussCalculation(16, GlobalH, GlobalP);
                 Console.WriteLine("GlobalH--------------------------");
-                Print2DMatrix(GlobalH, 16, 16);
+                GlobalH.PrintTable(16, 16);
                 Console.WriteLine("GlobalP--------------------------");
-                Print1DMatrix(GlobalP, 16);
+                GlobalP.PrintTable(16);
                 Console.WriteLine();
                 Console.WriteLine("Temperatury--------------------");
-                Print1DMatrix(tempresult, 16);
-
+                tempresult.PrintTable(16);
                 for (int p = 0; p < 16; p++)
                 {
                     grid.Nodes[p].T = tempresult[p];
@@ -177,26 +177,6 @@ namespace MES_App
 
         #endregion
 
-        public static void Print2DMatrix(double[,] cos, int row, int col)
-        {
-            for (int i = 0; i < row; i++)
-            {
-                for (int j = 0; j < col; j++)
-                {
-                    Console.Write(string.Format("{0:F3} ", cos[i, j]));
-                }
-                Console.Write(Environment.NewLine + Environment.NewLine);
-            }
-
-        }
-
-        public static void Print1DMatrix(double[] cos, int row)
-        {
-            for (int i = 0; i < row; i++)
-            {
-                Console.Write(string.Format("{0:F3} ",cos[i]));
-            }
-        }
 
         public static void Local2DMarixToGlobal(int[] LocalIds, double[] GlobalIds, double[,] localTab, double[,] gloabalTab)
         {

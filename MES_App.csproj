@@ -79,6 +79,8 @@
     <Compile Include="Core\UniversalPoint.cs" />
     <Compile Include="DataLoaders\File\FileLoader.cs" />
     <Compile Include="DataLoaders\StartUpData.cs" />
+    <Compile Include="Extension\DwoDimentionTableExtension.cs" />
+    <Compile Include="Extension\OneDimentionTableExtension.cs" />
     <Compile Include="Interfaces\IDataLoader.cs" />
     <Compile Include="Interfaces\IMatrixH.cs" />
     <Compile Include="Interfaces\IUniversalElement.cs" />

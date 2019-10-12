@@ -5,33 +5,6 @@ VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MES_App", "MES_App.csproj", "{571D2DD0-EE24-4891-9C9C-BB874C14E587}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sprawozdanie", "Sprawozdanie", "{117B1784-E423-46F4-BDBB-CC2E19FBDA94}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Sprawozdanie.pdf = ..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Sprawozdanie.pdf
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wyniki", "Wyniki", "{1C85F3A0-8EC4-457A-A0C4-F4E06D738968}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Iteracja0", "Iteracja0", "{7B51B424-C58D-4583-8CE6-0505DA7715D4}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja0\Iteracja0_testcase.png = ..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja0\Iteracja0_testcase.png
-		..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja0\Iteracja0_wynik.png = ..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja0\Iteracja0_wynik.png
-		..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja0\Temperatury_testCase.png = ..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja0\Temperatury_testCase.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Iteracja1", "Iteracja1", "{19B59FCC-2F12-4A3C-9A5C-B2699F2C346A}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja1\Iteracja1_testcase.png = ..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja1\Iteracja1_testcase.png
-		..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja1\Iteracja1_wynik.png = ..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja1\Iteracja1_wynik.png
-		..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja1\Temperatury_testCase.png = ..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\Iteracja1\Temperatury_testCase.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ostatnia Iteracja", "Ostatnia Iteracja", "{87D5618A-6F45-49FA-A6E3-A06202EB0851}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\OstatniaIteracja\OstatniaIteracja_wynik.png = ..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\OstatniaIteracja\OstatniaIteracja_wynik.png
-		..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\OstatniaIteracja\Temperatury_testCase.png = ..\..\Users\radek\Desktop\Radoslaw_Baor_MES\Mes Wyniki\OstatniaIteracja\Temperatury_testCase.png
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,12 +18,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{1C85F3A0-8EC4-457A-A0C4-F4E06D738968} = {117B1784-E423-46F4-BDBB-CC2E19FBDA94}
-		{7B51B424-C58D-4583-8CE6-0505DA7715D4} = {1C85F3A0-8EC4-457A-A0C4-F4E06D738968}
-		{19B59FCC-2F12-4A3C-9A5C-B2699F2C346A} = {1C85F3A0-8EC4-457A-A0C4-F4E06D738968}
-		{87D5618A-6F45-49FA-A6E3-A06202EB0851} = {1C85F3A0-8EC4-457A-A0C4-F4E06D738968}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {07E3047F-913E-463A-97E2-0C2EF8AFDDAC}
